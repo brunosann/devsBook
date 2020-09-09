@@ -42,6 +42,38 @@ class LoginController extends Controller
 
   public function signup()
   {
-    echo 'cadastro';
+    $data = [];
+
+    if (!empty($_SESSION['flash'])) {
+      $data['flash'] = $_SESSION['flash'];
+      $_SESSION['flash'] = '';
+    }
+
+    $this->render('signup', $data);
+  }
+
+  public function signupAction()
+  {
+    $name = filter_input(INPUT_POST, 'name');
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password');
+    $birthdate = filter_input(INPUT_POST, 'birthdate');;
+
+    if ($name && $email && $password && $birthdate) {
+      $date = explode('-', $birthdate);
+      if (count($date) != 3 || $date[0] > date('Y') || !strtotime($birthdate)) {
+        $_SESSION['flash'] = 'Data invalida!';
+        return $this->redirect('/cadastro');
+      }
+    }
+
+    if (LoginHandler::existEmail($email)) {
+      $_SESSION['flash'] = 'Email já cadastrado!';
+      return $this->redirect('/cadastro');
+    }
+
+    $token = LoginHandler::addUser($name, $email, $password, $birthdate);
+    $_SESSION['token'] = $token;
+    return $this->redirect('/');
   }
 }

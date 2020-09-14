@@ -11,8 +11,15 @@
 
         <?= $render('feed-editor', ['user' => $user]) ?>
 
-        <?= $render('feed-item', ['user' => $user]) ?>
+        <?php foreach ($feed['posts'] as $feedItem) : ?>
+          <?= $render('feed-item', ['feed' => $feedItem, 'user' => $user]) ?>
+        <?php endforeach ?>
 
+        <div class="feed-pagination">
+          <?php for ($i = 0; $i < $feed['pageCount']; $i++) : ?>
+            <a <?= $feed['currentPage'] === $i ? 'class="active"' : '' ?> href="<?= $base . '?page=' . $i ?>"><?= $i + 1 ?></a>
+          <?php endfor ?>
+        </div>
       </div>
       <div class="column side pl-5">
         <div class="box banners">

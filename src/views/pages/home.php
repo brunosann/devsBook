@@ -1,18 +1,18 @@
-<?= $render('header', ['user' => $user]) ?>
+<?= $render('header', ['loggedUser' => $loggedUser]) ?>
 
 <section class="container main">
 
-  <?= $render('aside') ?>
+  <?= $render('aside', ['menuActive' => 'home']) ?>
 
   <section class="feed mt-10">
 
     <div class="row">
       <div class="column pr-5">
 
-        <?= $render('feed-editor', ['user' => $user]) ?>
+        <?= $render('feed-editor', ['loggedUser' => $loggedUser]) ?>
 
         <?php foreach ($feed['posts'] as $feedItem) : ?>
-          <?= $render('feed-item', ['feed' => $feedItem, 'user' => $user]) ?>
+          <?= $render('feed-item', ['feed' => $feedItem, 'loggedUser' => $loggedUser]) ?>
         <?php endforeach ?>
 
         <div class="feed-pagination">

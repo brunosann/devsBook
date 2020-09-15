@@ -3,7 +3,7 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandler;
+use \src\handlers\UserHandler;
 use \src\handlers\PostHandler;
 
 class HomeController extends Controller
@@ -12,7 +12,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->loggedUser = LoginHandler::checkLogin();
+        $this->loggedUser = UserHandler::checkLogin();
         if (!$this->loggedUser) return $this->redirect('/login');
     }
 
@@ -21,6 +21,6 @@ class HomeController extends Controller
         $page = intval(filter_input(INPUT_GET, 'page'));
 
         $feed = PostHandler::getHomeFeed($this->loggedUser->id, $page);
-        $this->render('home', ['user' => $this->loggedUser, 'feed' => $feed]);
+        $this->render('home', ['loggedUser' => $this->loggedUser, 'feed' => $feed]);
     }
 }

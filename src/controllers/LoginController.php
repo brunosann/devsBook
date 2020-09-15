@@ -3,7 +3,7 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandler;
+use \src\handlers\UserHandler;
 
 class LoginController extends Controller
 {
@@ -25,7 +25,7 @@ class LoginController extends Controller
     $password = filter_input(INPUT_POST, 'password');
 
     if ($email && $password) {
-      $token = LoginHandler::loginVerif($email, $password);
+      $token = UserHandler::loginVerif($email, $password);
 
       if ($token) {
         $_SESSION['token'] = $token;
@@ -67,12 +67,12 @@ class LoginController extends Controller
       }
     }
 
-    if (LoginHandler::existEmail($email)) {
+    if (UserHandler::existEmail($email)) {
       $_SESSION['flash'] = 'Email já cadastrado!';
       return $this->redirect('/cadastro');
     }
 
-    $token = LoginHandler::addUser($name, $email, $password, $birthdate);
+    $token = UserHandler::addUser($name, $email, $password, $birthdate);
     $_SESSION['token'] = $token;
     return $this->redirect('/');
   }

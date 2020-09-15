@@ -23,10 +23,10 @@
           </div>
         </div>
         <div class="head-side-right">
-          <a href="" class="user-area">
-            <div class="user-area-text"><?= $user->name ?></div>
+          <a href="<?= $base . '/perfil' ?>" class="user-area">
+            <div class="user-area-text"><?= $loggedUser->name ?></div>
             <div class="user-area-icon">
-              <img src="<?= $base . '/media/avatars/' . $user->avatar ?>" />
+              <img src="<?= $base . '/media/avatars/' . $loggedUser->avatar ?>" />
             </div>
           </a>
           <a href="" class="user-logout">
